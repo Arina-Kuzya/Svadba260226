@@ -2,9 +2,13 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Свадьба Ивана и Арины</title>
-<link href="<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">" rel="stylesheet">  <style>
+
+  <!-- ИСПРАВЛЕНО: убрана дублирующая вложенность -->
+  <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -15,25 +19,29 @@
       font-family: 'Montserrat', sans-serif;
       color: #0d6644;
       scroll-behavior: smooth;
+      /* Убираем 100vh для iOS */
+      min-height: 100dvh; /* dvh = dynamic viewport height */
     }
 
-section#home {
-  background-image: url('https://i.postimg.cc/DwF3W2h1/20240917-183107.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: #094b32;
-  text-align: center;
-}
+    section#home {
+      /* Убираем background-attachment: fixed — нестабильно на iOS */
+      background-image: url('https://39gidov.ru/images/003/837/568/3837568/1160xnoinc/B3wDVcjtBx8.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #06ad46;
+      text-align: center;
+      /* Используем padding вместо min-height */
+      padding: 80px 20px 60px;
+    }
 
+    section#home .timer-unit {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
 
-section#home .timer-unit {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-}
     section {
-      min-height: 100vh;
+      /* Заменяем min-height: 100vh на более надёжный вариант */
       padding: 60px 20px;
       display: flex;
       flex-direction: column;
@@ -44,12 +52,13 @@ section#home .timer-unit {
     }
 
     .nav {
-      position: fixed;
+      position: sticky; /* fixed → sticky для лучшей совместимости */
       top: 0;
       left: 0;
       width: 100%;
       background: #87ddffcc;
       backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px); /* для Safari */
       z-index: 1000;
       display: flex;
       justify-content: center;
@@ -67,19 +76,20 @@ section#home .timer-unit {
       transition: background 0.3s;
     }
 
-    .nav a:hover, .nav a.active {
+    .nav a:hover,
+    .nav a.active {
       background: #e0f7fa;
       color: #10860c;
     }
 
-      .names {
-  font-family: 'Shantell Sans', cursive;
-  font-size: 48px;
-  font-weight: 700; /* жирное начертание */
-  color: #117205d0;
-  margin: 10px 0;
-  letter-spacing: 0.5px;
-}
+    .names {
+      font-family: 'Shantell Sans', cursive;
+      font-size: 48px;
+      font-weight: 700;
+      color: #117205d0;
+      margin: 10px 0;
+      letter-spacing: 0.5px;
+    }
 
     .photo {
       width: 70%;
@@ -109,14 +119,14 @@ section#home .timer-unit {
     .timer-value {
       font-size: 32px;
       display: block;
-      color: #fbff00be;
+      color: #07ff66;
     }
 
     .timer-label {
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #fbff00be;
+      color: #07ff66;
     }
 
     .form-box {
@@ -136,7 +146,9 @@ section#home .timer-unit {
       font-weight: 500;
     }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       width: 100%;
       padding: 12px;
       border: 1px solid #0d6644;
@@ -228,11 +240,15 @@ section#home .timer-unit {
       font-style: italic;
     }
 
+    /* Адаптация для мобильных */
     @media (max-width: 600px) {
       .names { font-size: 36px; }
       .timer-unit { min-width: 60px; padding: 10px 5px; }
       .timer-value { font-size: 24px; }
       .radio-group { flex-direction: column; gap: 10px; }
+      section#home {
+        padding: 70px 15px 50px;
+      }
     }
   </style>
 </head>
@@ -245,13 +261,12 @@ section#home .timer-unit {
     <a href="#schedule">Программа</a>
   </nav>
 
-  <!-- Страница 1: Главная -->
+  <!-- Главная -->
   <section id="home">
     <div style="font-size:28px; opacity:0.2; position:absolute; top:20px; left:20px;">⚓</div>
     <div class="names">Иван & Арина</div>
     <h2>Свадьба на Балтике</h2>
-    <img src="./AI.PNG" alt="Иван и Арина" class="photo" style="background: transparent;">
-    
+    <img src="./AI.PNG" alt="Иван и Арина" class="photo">
 
     <h3>До нашей свадьбы осталось:</h3>
     <h4>26 февраля 2026 года • г. Пионерск</h4>
@@ -275,7 +290,7 @@ section#home .timer-unit {
     </div>
   </section>
 
-  <!-- Страница 2: Единая форма -->
+  <!-- Для гостей -->
   <section id="guests" style="background:#f8fdff;">
     <h2>Дорогие гости!</h2>
     <div class="quote">
@@ -284,7 +299,6 @@ section#home .timer-unit {
     </div>
     <p>Будем бесконечно рады, если вы разделите с нами этот особенный день!</p>
 
-    <!-- ЕДИНАЯ ФОРМА -->
     <form class="form-box" action="https://formspree.io/f/xvgwqagl" method="POST">
       <div class="form-group">
         <label for="name">Ваше имя *</label>
@@ -307,11 +321,13 @@ section#home .timer-unit {
         <label>Ваши предпочтения по еде *</label>
         <select name="Еда" required>
           <option value="">— Выберите —</option>
-          <option value="Мясное">Мясное</option>
-          <option value="Рыба">Рыба</option>
+          <option value="Мясное">Курица</option>
+          <option value="Мясное">Свинина</option>
+          <option value="Мясное">Говядина</option>
+         <option value="Рыба">Рыба</option>
+         <option value="Рыба">Морепродукты</option>
           <option value="Вегетарианское">Вегетарианское</option>
-          <option value="Другое">Другое</option>
-        </select>
+                </select>
       </div>
 
       <div class="form-group">
@@ -333,22 +349,35 @@ section#home .timer-unit {
 
       <button type="submit">Отправить ответ</button>
     </form>
-    <p style="margin-top:15px; font-size:14px; color:#555;">Просим ответить до 1 явнаря 2026</p>
+    <p style="margin-top:15px; font-size:14px; color:#555;">Просим ответить до 1 января 2026</p>
   </section>
 
-  <!-- Страница 3: Расписание и карта -->
+  <!-- Программа -->
   <section id="schedule" style="background:#f0f9ff;">
-    <h2>Программа дня</h2>
+    <h2>Программа дня (26.02.2026)</h2>
     <div class="schedule">
       <div class="schedule-item"><strong>13:30</strong> — Встреча гостей у 
         <a href="https://yandex.ru/maps/-/CLBH7UY0" target="_blank">ЗАГСа</a>
       </div>
-      <div class="schedule-item"><strong>14:00</strong> — Церемония бракосочетания</div>
+      <div class="schedule-item"><strong>14:00</strong> — Церемония бракосочетания💍</div>
       <div class="schedule-item"><strong>15:30</strong> — Выезд в 
-      <a href="https://yandex.ru/maps/-/CLBHzAY3" target="_blank">Резиденцию</a>
-    </div>
-      <div class="schedule-item"><strong>16:00</strong> — Фотоссесия жениха и невесты</div>
+        <a href="https://yandex.ru/maps/-/CLBHzAY3" target="_blank">Резиденцию</a>
+      </div>
+      <div class="schedule-item"><strong>16:00</strong> — Фотосессия жениха и невесты🌊</div>
       <div class="schedule-item"><strong>17:00</strong> — Ужин и танцы под звёздами</div>
+      <div class="schedule-item"><strong>23:59...</strong> — Крепкий сон в Резиденции</div>
+    </div>
+    <h2>Программа дня (27.02.2026)</h2>
+    <div class="schedule">
+      <div class="schedule-item"><strong>10:00</strong> — Оживаем и завтракаем🌅</div>
+      <div class="schedule-item"><strong>12:00</strong> — Прогулка и отдых🌊</div>
+      <div class="schedule-item"><strong>17:00</strong> — Банные процедуры</div>
+      <div class="schedule-item"><strong>20:00</strong> — Ужин в Резиденции</div>
+       </div>
+        <h2>Программа дня (28.02.2026)</h2>
+    <div class="schedule">
+      <div class="schedule-item"><strong>09:00</strong> — Подготовка к выезду</div>
+      <div class="schedule-item"><strong>11:30</strong> — Выезд с Резиденции🌅</div>
     </div>
 
     <h3 style="margin-top:30px;">📍 ЗАГС г. Пионерск</h3>
@@ -370,7 +399,6 @@ section#home .timer-unit {
     Иван и Арина • 26.02.2026 • Пионерск, Балтика ⚓
   </footer>
 
-  <!-- Таймер -->
   <script>
     const weddingDate = new Date('2026-02-26T14:00:00').getTime();
     const countdown = () => {
@@ -395,16 +423,17 @@ section#home .timer-unit {
     // Подсветка меню
     window.addEventListener('scroll', () => {
       const sections = ['home', 'guests', 'schedule'];
-      let current = '';
-      for (const section of sections) {
-        const element = document.getElementById(section);
+      let current = 'home';
+      for (const id of sections) {
+        const element = document.getElementById(id);
         const rect = element.getBoundingClientRect();
         if (rect.top <= 100 && rect.bottom >= 100) {
-          current = section;
+          current = id;
         }
       }
       document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-      document.querySelector(`.nav a[href="#${current}"]`)?.classList.add('active');
+      const activeLink = document.querySelector(`.nav a[href="#${current}"]`);
+      if (activeLink) activeLink.classList.add('active');
     });
   </script>
 </body>
